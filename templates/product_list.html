@@ -1,0 +1,17 @@
+{% include 'header.html' %}
+<div class="center-content">
+    {% csrf_token %}
+    <div class="form">
+    {% for item in data %}
+        <div><span>Product: </span>{{ item.name }}</div>
+        <div><span>Description: </span>{{ item.description }}</div>
+        <div><span>Category: </span>{{ item.category }}</div>
+        <div>
+            <button style="margin-top: 20px; margin-bottom: 50px;" onclick="editProduct({{ item.id }})">Edit</button>
+            <button style="margin-top: 20px; margin-bottom: 50px;" onclick="deleteProduct({{ item.id }})">Delete</button>
+        </div>
+    {% endfor %}
+    </div>
+    <div><button onclick="window.location.href='/shopping_list/'">Shopping list</button></div>
+</div>
+{% include 'footer.html' %}

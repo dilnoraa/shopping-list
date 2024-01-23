@@ -1,0 +1,26 @@
+{% include 'header.html' %}
+<div class="center-content">
+    {% csrf_token %}
+    <div id="id_shopping_list" class="form">
+        {% for item in shopping_items %}
+            <div class="item-row">
+                <span>{{ forloop.counter }}. </span>
+                <div><span></span>{{ item.product_name.name }} - {{ item.product_name.description }} </div>
+                {% if item.location %}
+                    <div style="padding-left: 10px;"><span>Location: </span>{{ item.location }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    <div style="width: 300px; margin-left: 40%;">
+        <select id="id_selected_product" name="product_name">
+            {% for name in products %}
+                <option value="{{ name }}">{{ name }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="location" id="id_location" placeholder="Location">
+    </div>
+    <button class="button-shopping" onclick="addShoppingItem()">Add</button>
+    <div><button class="button-shopping" onclick="window.location.href='/product/'">Create product</button></div>
+</div>
+{% include 'footer.html' %}
