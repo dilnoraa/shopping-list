@@ -6,6 +6,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(default=datetime.utcnow)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=100)
+    image = models.ImageField(blank=True, null=True, default=None, upload_to='product_images/')
     category = models.CharField(max_length=100)
 
     def __str__(self):
@@ -18,6 +19,7 @@ class ShoppingItem(models.Model):
     product_name = models.ForeignKey(Product, on_delete=models.CASCADE)
     location = models.CharField(max_length=100, default=None)
     price = models.FloatField(blank=True, null=True, default=None)
+    amount = models.IntegerField(blank=True, null=True, default=1)
 
     def __str__(self):
         return str(self.id)

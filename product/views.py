@@ -76,6 +76,8 @@ class Shoppinglist(APIView):
         item = ShoppingItem()
         item.product_name = product_object
         item.location = data["location"] if data["location"] else ""
+        item.price = float(data["price"]) if data["price"] else None
+        item.amount = int(data["amount"]) if data["amount"] else 1
         item.save()
         return Response({"id": item.id}, status=status.HTTP_201_CREATED)
 

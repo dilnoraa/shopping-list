@@ -5,9 +5,15 @@
         {% for item in shopping_items %}
             <div class="item-row">
                 <span>{{ forloop.counter }}. </span>
+                {% if item.amount and item.amount > 1 %}
+                    <div style="padding-left: 10px;"><span>Amount: </span>{{ item.amount }}</div>
+                {% endif %}
                 <div><span></span>{{ item.product_name.name }} - {{ item.product_name.description }} </div>
                 {% if item.location %}
                     <div style="padding-left: 10px;"><span>Location: </span>{{ item.location }}</div>
+                {% endif %}
+                {% if item.price %}
+                    <div style="padding-left: 10px;"><span>Price: </span>{{ item.price }}</div>
                 {% endif %}
             </div>
         {% endfor %}
@@ -19,6 +25,8 @@
             {% endfor %}
         </select>
         <input type="text" name="location" id="id_location" placeholder="Location">
+        <input type="text" name="amount" id="id_amount" placeholder="Amount">
+        <input type="text" name="price" id="id_price" placeholder="Price">
     </div>
     <button class="button-shopping" onclick="addShoppingItem()">Add</button>
     <div><button class="button-shopping" onclick="window.location.href='/product/'">Create product</button></div>

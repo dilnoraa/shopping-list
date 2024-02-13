@@ -8,7 +8,9 @@ function addShoppingItem() {
         },
         body: JSON.stringify({
             "product": document.getElementById("id_selected_product").value,
-            "location": document.getElementById("id_location").value
+            "location": document.getElementById("id_location").value,
+            "price": document.getElementById("id_price").value,
+            "amount": document.getElementById("id_amount").value
         })
     };
     fetch(
@@ -40,6 +42,7 @@ function getShoppingList(id) {
             "<span>" + (count + 1) + "</span>" +
             "<div><span></span>" + data.product_name.name + " - " + data.product_name.description + "</div>" +
             "<div style='padding-left: 10px;'><span>Location: </span>" + data.location + "</div>" +
+            "<div style='padding-left: 10px;'><span>Price: </span>" + data.price + "</div>" +
             "</div>";
         shopping_items.appendChild(div);
     });
