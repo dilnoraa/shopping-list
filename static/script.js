@@ -22,6 +22,24 @@ function addShoppingItem() {
     });
 }
 
+function deleteShoppingItem(id) {
+    console.log(id);
+     if (confirm("Are you sure you want to delete this shopping item?")) {
+        const request_options = {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value
+            }
+        }
+        url = "/shopping_list_api/" + id;
+        fetch(url, request_options)
+        .then(function(data) {
+            window.location.href = "/shopping_list"
+        });
+    }
+}
+
 function getShoppingList(id) {
     var get_request_options = {
         method: 'GET',
@@ -66,5 +84,14 @@ function deleteProduct(id) {
         .then(function(data) {
             window.location.href = "/product_list/"
         });
+    }
+}
+
+function addResponsiveClass() {
+    var element = document.getElementById("id_topnav");
+    if (element.className === "topnav") {
+        element.className += " responsive";
+    } else {
+        element.className = "topnav";
     }
 }

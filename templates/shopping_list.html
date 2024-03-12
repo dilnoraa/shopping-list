@@ -1,9 +1,12 @@
 {% include 'header.html' %}
-<div class="center-content">
+<div class="center-content content">
     {% csrf_token %}
     <div id="id_shopping_list" class="form">
         {% for item in shopping_items %}
             <div class="item-row">
+                {% if item.product_name.image %}
+                    <img class="product-image" src="{{ item.product_name.image.url }}" alt="Product Image">
+                {% endif %}
                 <span>{{ forloop.counter }}. </span>
                 {% if item.amount and item.amount > 1 %}
                     <div style="padding-left: 10px;"><span>Amount: </span>{{ item.amount }}</div>
@@ -15,6 +18,7 @@
                 {% if item.price %}
                     <div style="padding-left: 10px;"><span>Price: </span>{{ item.price }}</div>
                 {% endif %}
+                <span class="material-icons" style="margin-left: 5px; color: red; cursor: pointer;" onclick="deleteShoppingItem({{ item.id }});">clear</span>
             </div>
         {% endfor %}
     </div>

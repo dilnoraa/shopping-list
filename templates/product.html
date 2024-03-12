@@ -1,7 +1,7 @@
 {% include 'header.html' %}
-<div class="center-content">
+<div class="content center-content">
     <p>Product Information</p>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <input class="button" type="submit" value="Save">

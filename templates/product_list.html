@@ -1,14 +1,21 @@
 {% include 'header.html' %}
-<div class="center-content">
+<div class="center-products-content content">
     {% csrf_token %}
     <div class="form">
     {% for item in data %}
-        <div><span>Product: </span>{{ item.name }}</div>
-        <div><span>Description: </span>{{ item.description }}</div>
-        <div><span>Category: </span>{{ item.category }}</div>
-        <div>
-            <button style="margin-top: 20px; margin-bottom: 50px;" onclick="editProduct({{ item.id }})">Edit</button>
-            <button style="margin-top: 20px; margin-bottom: 50px;" onclick="deleteProduct({{ item.id }})">Delete</button>
+        {% if item.image %}
+            <img class="product-image" src="{{ item.image.url }}" alt="Product Image">
+        {% else %}
+            <div class="product-image"></div>
+        {% endif %}
+        <div class="product-details">
+            <div><span>Product: </span>{{ item.name }}</div>
+            <div><span>Description: </span>{{ item.description }}</div>
+            <div><span>Category: </span>{{ item.category }}</div>
+            <div class="product-actions">
+                <button style="margin-top: 20px; margin-bottom: 50px;" onclick="editProduct({{ item.id }})">Edit</button>
+                <button style="margin-top: 20px; margin-bottom: 50px;" onclick="deleteProduct({{ item.id }})">Delete</button>
+            </div>
         </div>
     {% endfor %}
     </div>

@@ -1,12 +1,13 @@
 from django.db import models
 from datetime import datetime
+from django_resized import ResizedImageField
 
 class Product(models.Model):
     id = models.BigAutoField(primary_key=True, editable=False)
     created_at = models.DateTimeField(default=datetime.utcnow)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=100)
-    image = models.ImageField(blank=True, null=True, default=None, upload_to='product_images/')
+    image = ResizedImageField(size=[300, 300], upload_to='static/product_images/', blank=True, null=True, default=None)
     category = models.CharField(max_length=100)
 
     def __str__(self):

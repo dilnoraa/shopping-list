@@ -8,6 +8,7 @@ from product.forms.product_form import ProductForm
 from product.models import Product, ShoppingItem
 from product.serializers import ShoppingItemSerializer
 from django.forms.models import model_to_dict
+from PIL import Image
 import json
 
 
@@ -39,6 +40,8 @@ def product_view(request, resource_id=None):
         product.name = data["name"]
         product.description = data["description"]
         product.category = data["category"]
+        if request.FILES:
+            product.image = request.FILES["image"]
         product.save()
         messages.success(request, "Created a new product")
         return HttpResponseRedirect("/product_list/")
@@ -47,7 +50,11 @@ def product_view(request, resource_id=None):
 def products_view(request):
     template_path = "product.html"
     context_dict = {}
-    product_form = ProductForm(request.POST or None)
+    data = request.POST
+    if request.FILES:
+        product_form = ProductForm(data, request.FILES)
+    else:
+        product_form = ProductForm(data or None)
     if request.method == 'GET':
         context_dict["form"] = product_form
         return render(request, template_path, context_dict)
@@ -81,6 +88,10 @@ class Shoppinglist(APIView):
         item.save()
         return Response({"id": item.id}, status=status.HTTP_201_CREATED)
 
+    def delete(self, request, resource_id):
+        shopping_item = ShoppingItem.objects.get(id=resource_id)
+        shopping_item.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 def shopping_list_view(request):
     template_path = "shopping_list.html"
