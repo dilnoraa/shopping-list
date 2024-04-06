@@ -28,11 +28,10 @@
                 <option value="{{ name }}">{{ name }}</option>
             {% endfor %}
         </select>
-        <input type="text" name="location" id="id_location" placeholder="Location">
         <input type="text" name="amount" id="id_amount" placeholder="Amount">
         <input type="text" name="price" id="id_price" placeholder="Price">
+        <input type="text" name="location" id="id_location" placeholder="Location">
     </div>
     <button class="button-shopping" onclick="addShoppingItem()">Add</button>
-    <div><button class="button-shopping" onclick="window.location.href='/product/'">Create product</button></div>
 </div>
 {% include 'footer.html' %}

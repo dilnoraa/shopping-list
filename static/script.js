@@ -1,3 +1,32 @@
+function addProductToShoppingList(item) {
+    if (confirm("Are you sure you want to add this product to shopping list?")) {
+        addList = document.querySelector(`.add-list[product-id="${item}"]`);
+        plusIcon = addList.querySelector('.plus-product');
+        loadingIcon = addList.querySelector('.loading-icon');
+        if (loadingIcon) {
+            loadingIcon.style.display = "block";
+            plusIcon.style.display = "none";
+        }
+        var url = "/shopping_list_api/";
+        const request_options = {
+            method: "POST",
+             headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value
+            },
+            body: JSON.stringify({
+                "product_id": item
+            })
+        };
+        fetch(url, request_options)
+        .then(response => response.json())
+        .then(response => {
+            loadingIcon.style.display = "none";
+            plusIcon.style.display = "block";
+        });
+    }
+}
+
 function addShoppingItem() {
     var url = "/shopping_list_api/";
     const request_options = {

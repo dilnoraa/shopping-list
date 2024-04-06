@@ -8,8 +8,6 @@ from product.forms.product_form import ProductForm
 from product.models import Product, ShoppingItem
 from product.serializers import ShoppingItemSerializer
 from django.forms.models import model_to_dict
-from PIL import Image
-import json
 
 
 def product_list_view(request):
@@ -79,12 +77,15 @@ class Shoppinglist(APIView):
 
     def post(self, request):
         data = request.data
-        product_object = Product.objects.filter(name=data["product"]).first()
+        if "product_id" in data:
+            product_object = Product.objects.filter(id=data["product_id"]).first()
+        else:
+            product_object = Product.objects.filter(name=data["product"]).first()
         item = ShoppingItem()
         item.product_name = product_object
-        item.location = data["location"] if data["location"] else ""
-        item.price = float(data["price"]) if data["price"] else None
-        item.amount = int(data["amount"]) if data["amount"] else 1
+        item.location = data["location"] if "location" in data else ""
+        item.price = float(data["price"]) if "price" in data else None
+        item.amount = int(data["amount"]) if "amount" in data else 1
         item.save()
         return Response({"id": item.id}, status=status.HTTP_201_CREATED)
 
